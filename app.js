@@ -115,4 +115,25 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = app; //needed if the server runs with www/bin
+
+/*
+// The followings will be inserted in www/bin
+var port = process.env.PORT;
+var privkeyPath = process.env.PPRIVKEYPATH;
+var fullchainPath = process.env.FULLCHAINPATH;
+
+//for https
+spdy.createServer({
+  key: fs.readFileSync(privkeyPath),
+ cert: fs.readFileSync(fullchainPath)
+}, app).listen(port)
+*/
+
+//for http
+//app.listen(port, () => {
+//    console.log(`Running at Port ${port} ...`)
+//app.listen(3000, () => {
+//console.log("running at port 3000 ...")
+//})
+

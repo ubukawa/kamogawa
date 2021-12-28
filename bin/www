@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// Modified as https
 
 /**
  * Module dependencies.
@@ -6,7 +7,10 @@
 
 var app = require('../app');
 var debug = require('debug')('graph-tutorial:server');
-var http = require('http');
+//var http = require('http');
+var spdy = require('spdy'); // for https
+var fs = require('fs');  // for file reading
+//
 
 /**
  * Get port from environment and store in Express.
@@ -16,10 +20,16 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 
-var server = http.createServer(app);
+//var server = http.createServer(app);
+var privkeyPath = process.env.PPRIVKEYPATH;
+var fullchainPath = process.env.FULLCHAINPATH;
+var server = spdy.createServer({
+  key: fs.readFileSync(privkeyPath),
+  cert: fs.readFileSync(fullchainPath)
+},app);
 
 /**
  * Listen on provided port, on all network interfaces.

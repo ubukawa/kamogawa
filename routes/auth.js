@@ -47,9 +47,9 @@ router.get('/callback',
 
       // Add the user to user storage
       req.app.locals.users[req.session.userId] = {
-        displayName: user.displayName,
-        email: user.mail || user.userPrincipalName,
-        timeZone: user.mailboxSettings.timeZone
+        displayName: user.displayName
+        //email: user.mail || user.userPrincipalName,
+        //timeZone: user.mailboxSettings.timeZone
       };
     } catch (error) {
       req.flash('error_msg', {
